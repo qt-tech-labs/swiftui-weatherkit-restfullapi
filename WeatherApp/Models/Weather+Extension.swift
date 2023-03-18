@@ -37,12 +37,12 @@ extension Day {
         return temperatureMax.toString()
     }
     var weekDays: String {
-        let isToday = Calendar.current.compare(Date(), to: forecastStart, toGranularity: .day)
+        let isToday = Calendar.current.compare(Date(), to: forecastEnd, toGranularity: .day)
         switch isToday {
         case .orderedSame:
             return "Today"
         default:
-            return forecastStart.toShortWeekday()
+            return forecastEnd.toShortWeekday()
         }
     }
 }

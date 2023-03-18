@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class HourlyVM: ObservableObject {
     @Published var hours = [Hour]()
@@ -18,10 +19,10 @@ class HourlyVM: ObservableObject {
         self.service = service
     }
     
-    func loadHourlyData(date: Date) {
+    func loadHourlyData(location: CLLocationCoordinate2D, date: Date) {
         isLoading = true
         errorMessage = nil
-        service.fetchHourly(date: date, completion: { [unowned self] result in
+        service.fetchHourly(location: location, date: date, completion: { [unowned self] result in
             DispatchQueue.main.async {
                 self.isLoading = false
                 switch result {

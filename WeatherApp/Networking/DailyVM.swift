@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class DailyVM: ObservableObject {
     @Published var days = [Day]()
@@ -16,12 +17,11 @@ class DailyVM: ObservableObject {
     
     init(service: ApiProtocol = APIService()) {
         self.service = service
-        loadDailyData()
     }
-    func loadDailyData() {
+    func loadDailyData(location: CLLocationCoordinate2D) {
         isLoading = true
         errorMessage = nil
-        service.fetchDaily(completion: { [unowned self] result in
+        service.fetchDaily(location: location, completion: { [unowned self] result in
             DispatchQueue.main.async {
                 self.isLoading = false
                 switch result {

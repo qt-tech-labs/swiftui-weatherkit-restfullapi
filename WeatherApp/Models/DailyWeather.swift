@@ -31,7 +31,7 @@ struct Day: Codable {
     let moonrise: Date?
     let moonset: Date?
     let precipitationAmount, precipitationChance: Double
-    let precipitationType: PrecipitationType
+    let precipitationType: String
     let snowfallAmount: Int
     let solarMidnight, solarNoon, sunrise, sunriseCivil: Date
     let sunriseNautical, sunriseAstronomical, sunset, sunsetCivil: Date
@@ -47,7 +47,6 @@ struct Forecast: Codable {
     let cloudCover: Double
     let conditionCode: String
     let humidity, precipitationAmount, precipitationChance: Double
-    let precipitationType: PrecipitationType
     let snowfallAmount, windDirection: Int
     let windSpeed: Double
 }

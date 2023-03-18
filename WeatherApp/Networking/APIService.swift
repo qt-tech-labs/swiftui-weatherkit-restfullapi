@@ -6,10 +6,14 @@
 //
 
 import Foundation
+import CoreLocation
 struct APIService: ApiProtocol {
+    func buildBaseURL(_ location: CLLocationCoordinate2D, _ dataset: String) -> String {
+        return "https://weatherkit.apple.com/api/v1/weather/en_US/\(location.latitude)/\(location.longitude)?dataSets=\(dataset)"
+    }
     
-    func fetchDaily(completion: @escaping (Result<[Day], APIError>) -> Void) {
-        let url = "https://weatherkit.apple.com/api/v1/weather/en_US/34.052/118.24?dataSets=forecastDaily"
+    func fetchDaily(location: CLLocationCoordinate2D, completion: @escaping (Result<[Day], APIError>) -> Void) {
+        let url = buildBaseURL(location, "forecastDaily")
         fetch(DailyWeather.self, url: url) { (result) in
             switch result {
             case .success(let data):
@@ -20,8 +24,9 @@ struct APIService: ApiProtocol {
         }
     }
     
-    func fetchHourly(date: Date, completion: @escaping (Result<[Hour], APIError>) -> Void) {
-        let url = "https://weatherkit.apple.com/api/v1/weather/en_US/34.052/118.24?dataSets=forecastHourly&country=US&hourlyStart=2023-03-25T00:00:00Z&hourlyEnd=2023-03-25T23:00:00Z"
+    func fetchHourly(location: CLLocationCoordinate2D, date: Date, completion: @escaping (Result<[Hour], APIError>) -> Void) {
+        let dateComponent = date.toString("yyyy-MM-dd")
+        let url = buildBaseURL(location, "forecastHourly") + "&hourlyStart=\(dateComponent)T00:00:00Z&hourlyEnd=\(dateComponent)T23:59:59Z"
         fetch(HourlyWeather.self, url: url) { (result) in
             switch result {
             case .success(let data):

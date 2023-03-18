@@ -29,7 +29,7 @@ struct Hour: Codable {
     let conditionCode: ConditionCode
     let daylight: Bool
     let humidity, precipitationAmount, precipitationIntensity, precipitationChance: Double
-    let precipitationType: PrecipitationType
+    let precipitationType: String
     let pressure: Double
     let pressureTrend: PressureTrend
     let snowfallIntensity, snowfallAmount: Int
@@ -50,11 +50,6 @@ enum ConditionCode: String, Codable {
     case partlyCloudy = "PartlyCloudy"
     case thunderstorms = "Thunderstorms"
     case clear = "Clear"
-}
-
-enum PrecipitationType: String, Codable {
-    case clear = "clear"
-    case rain = "rain"
 }
 
 enum PressureTrend: String, Codable {

@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject var fetcher = DailyVM()
     @StateObject var locationManager = LocationManager()
     @State var selectedDate  = Date()
+    @State var loaded = false
     var body: some View {
         ZStack {
             Color.ui.primary
@@ -24,7 +25,9 @@ struct ContentView: View {
                 } else if fetcher.errorMessage != nil {
                     Text("Fail to load data! Error: \(fetcher.errorMessage ?? "NA")")
                     Button("Reload") {
-                        fetcher.loadDailyData()
+                        if let location = locationManager.locationManager.location?.coordinate {
+                            fetcher.loadDailyData(location: location)
+                        }
                     }
                 } else {
                     VStack(alignment: .leading) {
@@ -36,7 +39,7 @@ struct ContentView: View {
                             ForEach (fetcher.days, id: \.forecastStart) { day in
                                 ForecastRow(day: day) {
                                     showingSheet.toggle()
-                                    self.selectedDate = day.forecastStart
+                                    self.selectedDate = day.forecastEnd
                                 }
                             }//Foreach
                             .listRowBackground(Color.ui.secondary)
@@ -47,14 +50,20 @@ struct ContentView: View {
                         .background(Color.ui.secondary)
                         .sheet(isPresented: $showingSheet, content: {
                             NavigationView {
-                                HourlyView(selectedDate: self.$selectedDate, showingModal: self.$showingSheet)
-                                    
+                                HourlyView(selectedDate: self.$selectedDate, locationManager: self.locationManager)
                                     .navigationTitle(selectedDate.toString())
                                         .navigationBarItems(trailing: Button("Done",
                                                                              action: {self.showingSheet.toggle()}))
                                     }
                         })
                     }// VStack
+                    .onAppear(perform: {
+                        if !loaded, let location = locationManager.locationManager.location?.coordinate {
+                            loaded = true
+                            fetcher.loadDailyData(location: location)
+                        }
+                        
+                    })
                     .cornerRadius(15)
                     .background(Color.ui.secondary)
                     .padding(.leading, 10)

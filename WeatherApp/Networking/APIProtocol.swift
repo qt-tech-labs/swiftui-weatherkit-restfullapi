@@ -9,6 +9,6 @@ import Foundation
 import CoreLocation
 
 protocol ApiProtocol {
-    func fetchDaily(completion: @escaping(Result<[Day], APIError>) -> Void)
-    func fetchHourly(date: Date, completion: @escaping(Result<[Hour], APIError>) -> Void)
+    func fetchDaily(location: CLLocationCoordinate2D, completion: @escaping(Result<[Day], APIError>) -> Void)
+    func fetchHourly(location: CLLocationCoordinate2D, date: Date, completion: @escaping(Result<[Hour], APIError>) -> Void)
 }
