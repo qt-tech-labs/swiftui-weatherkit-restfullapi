@@ -46,5 +46,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app needs to use the location service for getting the current coordination.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>The app needs to use the location service for getting the current coordination.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>The app needs to use the location service for getting the current coordination.</string>
 </dict>
 </plist>
