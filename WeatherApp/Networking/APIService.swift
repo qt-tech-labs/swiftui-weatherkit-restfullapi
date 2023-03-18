@@ -45,7 +45,7 @@ struct APIService: ApiProtocol {
             }
         
         var request = URLRequest(url: url)
-        request.setValue("Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6IkZENFRaNTk1V0EiLCJpZCI6IkFXUjIyNDc5TTQuY29tLmh5ZWwuaW9zLndlYXRoZXIiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2Nzg5NTE1NTksImV4cCI6MTY4OTEzNDY0NiwiaXNzIjoiQVdSMjI0NzlNNCIsInN1YiI6ImNvbS5oeWVsLmlvcy53ZWF0aGVyIn0.1DJn1h9SAh4V_-e74epRRINhEbDdYeq8SUnjP7RtzhXMMmOGOxwIwQOEjSeB5Qv5mpVyteY5bif5ijAQWcZ9TA", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer PUT_TOKEN_HERE", forHTTPHeaderField: "Authorization")
             let task = URLSession.shared.dataTask(with: request) {(data , response, error) in
                 print("got response")
                 if let error = error as? URLError {
